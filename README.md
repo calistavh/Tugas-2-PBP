@@ -7,7 +7,7 @@ Kelas: C
 <https://tugas-02-pbp.herokuapp.com/katalog>
 
 ## Bagan Request-Response Django
-![Bagan Request-Response Django](https://github.com/calistavh/Tugas-2-PBP/bagan_django.jpg "Bagan Request-Response Django")
+![Bagan Request-Response Django](bagan_django.jpg "Bagan Request-Response Django")
 
 ## Virtual Environment
 Virtual environment berfungsi sebagai workspace bagi sebuah project Django yang terpisah dari project Django lainnya. Pengaturan dan package yang di-install di satu virtual environment tidak mempengaruhi environment lainnya, sehingga menjadi lebih terkontrol. Project Django dapat dibuat tanpa virtual environment, hanya saja package requirement yang dibutuhkan dapat berbentrokan dengan project lainnya.
