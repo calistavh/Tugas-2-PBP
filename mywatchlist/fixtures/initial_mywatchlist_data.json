@@ -1,0 +1,112 @@
+[
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 1,
+        "fields": {
+            "watched": "No",
+            "title": "Mencuri Raden Saleh",
+            "rating": "-",
+            "release_date": "August 25, 2022",
+            "review": "-"
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 2,
+        "fields": {
+            "watched": "No",
+            "title": "Spirited Away",
+            "rating": "-",
+            "release_date": "July 20, 2001",
+            "review": "-"
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 3,
+        "fields": {
+            "watched": "Yes",
+            "title": "Corpse Bride",
+            "rating": "4",
+            "release_date": "September 23, 2005",
+            "review": "A stop-motion movie made by Tim Burton, known for his grim themes. A man who's anxious about his upcoming arranged marriage accidentally proposes to a corpse while reciting his vows. The story is straightforward and ends happily, contrasting the dark setting of the entire movie. A great combination for me."
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 4,
+        "fields": {
+            "watched": "No",
+            "title": "Encanto",
+            "rating": "-",
+            "release_date": "November 24, 2021",
+            "review": "-"
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 5,
+        "fields": {
+            "watched": "Yes",
+            "title": "Jurassic World Dominion",
+            "rating": "3",
+            "release_date": "June 10, 2022",
+            "review": "Another movie from the Jurassic Park franchise, where recurring characters bump into each other to unravel the schemes of a suspicious genetics research center. I have to side with the online reviews for this one: it's nowhere near as impressive as the few first movies."
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 6,
+        "fields": {
+            "watched": "Yes",
+            "title": "Violet Evergarden: The Movie",
+            "rating": "4",
+            "release_date": "September 18, 2020",
+            "review": "A continuation of the anime series with the same name. It tells a story of how an ex-soldier, now a scribe named Violet reunites with the major she loves after years of his speculated death. It's slow-paced and somewhat less intensive than the series, but the heartwarming end that wraps her tragic past is worth the time."
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 7,
+        "fields": {
+            "watched": "No",
+            "title": "Everything Everywhere All At Once",
+            "rating": "-",
+            "release_date": "March 25, 2022",
+            "review": "-"
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 8,
+        "fields": {
+            "watched": "Yes",
+            "title": "9",
+            "rating": "5",
+            "release_date": "September 9, 2009",
+            "review": "A post-apocalyptic Tim Burton movie, my favorite ever since I was a child. It's about nine small stitchpunk dolls named in numbers surviving against AI-equipped war machines in a world rid of living things. Watching it again after I grew up made me notice some plot inconsistencies, but the dark setting always awes me."
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 9,
+        "fields": {
+            "watched": "No",
+            "title": "Drifting Home",
+            "rating": "-",
+            "release_date": "September 16, 2022",
+            "review": "-"
+        }
+    },
+    {
+        "model": "mywatchlist.watchlistmovie",
+        "pk": 10,
+        "fields": {
+            "watched": "Yes",
+            "title": "A Whisker Away",
+            "rating": "4",
+            "release_date": "June 18, 2020",
+            "review": "A cute story about a girl who turns into a cat just to see her crush. But it gets deeper as this ability soon becomes a form of escapism from her problems in life. She's such a relatable character for audiences of similar age dealing with internal conflict. The fantasy setting near the end isn't to my liking, but it's a charming movie overall."
+        }
+    }
+]

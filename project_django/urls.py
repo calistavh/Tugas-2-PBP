@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-# TUGAS 2 PBP: mendaftarkan app katalog
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('example_app.urls')),
     path('katalog/', include('katalog.urls')),
+    path('mywatchlist/', include('mywatchlist.urls')),
 ]
