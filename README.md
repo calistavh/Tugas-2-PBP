@@ -4,9 +4,10 @@ NPM: 2106630473<br>
 Kelas: C
 
 ## Link App Heroku
-HTML: <https://tugas-pbp.herokuapp.com/mywatchlist/html><br>
-XML: <https://tugas-pbp.herokuapp.com/mywatchlist/xml><br>
-JSON: <https://tugas-pbp.herokuapp.com/mywatchlist/json>
+
+HTML: <https://tgs-pbp.herokuapp.com/mywatchlist/html><br>
+XML: <https://tgs-pbp.herokuapp.com/mywatchlist/xml><br>
+JSON: <https://tgs-pbp.herokuapp.com/mywatchlist/json>
 
 ## Perbedaan File HTML, XML, dan JSON
 
@@ -49,3 +50,7 @@ Data delivery diperlukan dalam mengimplementasikan suatu platform agar data dapa
 Runserver dan buka app di localhost. Jika berhasil, push dan jalankan workflow di GitHub untuk men-deploy ke Heroku.
 
 ## Screenshot Postman
+
+![Postman HTML](screenshots/tugas3_postman_html.jpg "Postman HTML")
+![Postman XML](screenshots/tugas3_postman_xml.jpg "Postman XML")
+![Postman JSON](screenshots/tugas3_postman_json.jpg "Postman JSON")
