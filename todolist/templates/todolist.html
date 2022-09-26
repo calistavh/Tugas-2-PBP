@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Tugas 4 PBP - To-Do List</h1>
+
+<h3>Username:</h3>
+{{username}}
+
+<br><br>
+<button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+
+
+<h3>Daftar Task:</h3>
+
+<table>
+    <tr>
+        <th>Tanggal Pembuatan</th>
+        <th>Judul</th>
+        <th>Deskripsi</th>
+    </tr>
+    {% for task in tasks %}
+        {% if task.user == user %}
+            <tr>
+                <th>{{task.date}}</th>
+                <th>{{task.title}}</th>
+                <th>{{task.description}}</th>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+{% if messages %}
+<br>
+<ul>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}  
+
+<br>
+<button><a href="{% url 'todolist:create_task' %}">Tambah Task Baru</a></button>
+
+{% endblock content %}
