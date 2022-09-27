@@ -1,56 +1,84 @@
-# Pemrograman Berbasis Platform - Tugas 3
+# Pemrograman Berbasis Platform - Tugas 4
+
 Nama: Calista Vimalametta Heryadi<br>
 NPM: 2106630473<br>
 Kelas: C
 
+---
+
 ## Link App Heroku
 
-HTML: <https://tgs-pbp.herokuapp.com/mywatchlist/html><br>
-XML: <https://tgs-pbp.herokuapp.com/mywatchlist/xml><br>
-JSON: <https://tgs-pbp.herokuapp.com/mywatchlist/json>
+<https://tgs-pbp.herokuapp.com/todolist/>
 
-## Perbedaan File HTML, XML, dan JSON
+---
 
-1. **HTML:**
-- merupakan Markup language
-- untuk menampilkan data
-- menggunakan tag dengan nama yang sudah ditetapkan
+## {% csrf_token %} pada \<form\>
 
-2. **XML:**
-- merupakan Markup language
-- untuk mengirim data
-- menggunakan tag dengan nama yang ditentukan sendiri
+CSRF token adalah bentuk perlindungan terhadap serangan Cross Site Request Forgery (CSRF) berupa string random. CSRF token di-generate server ketika client mengakses form dengan `{% csrf_token %}`, kemudian token tersebut dimasukkan ke sebuah field tersembunyi dalam form dan disimpan oleh server. Saat client mengumpulkan form, server membandingkan token dari form dengan token yang disimpan. Jika sama, server memproses request client. Jika tidak sama atau tidak ada, server menolak request client dengan error 403 Forbidden.
 
-3. **JSON:**
-- merupakan JavaScript language
-- untuk mengirim data
-- menggunakan kurung, bukan tag
+---
 
-## Data Delivery dalam Implementasi Platform
+## Membuat \<form\> secara Manual
 
-Data delivery diperlukan dalam mengimplementasikan suatu platform agar data dapat dikirim dari satu stack ke stack lainnya. Pengiriman data bermanfaat untuk kolaborasi, mengorganisasi data, beralih ke teknologi yang lebih baru, dan lain-lain.
+Form dapat dibuat secara manual menggunakan tag `<input>` untuk setiap field. Attribute `<input>` diantaranya:
+- `type`: jenis field seperti text, password (karakter disembunyikan), submit (tombol pengumpulan), dll.
+- `name`: nama yang bersesuaian dengan attribute di class Form.
+- `placeholder` atau `value`: teks yang ditampilkan pada field yang masih kosong atau tombol.
+<p>Setelah dikumpulkan, data tersebut diperoleh dengan `request.POST` dan dimasukkan ke constructor class Form seperti biasa.</p>
 
-## Implementasi Tugas 3
+---
 
-1. **cmd:** `python manage.py startapp mywatchlist`
-2. **project_django/settings.py:** tambah `'mywatchlist'` di list `INSTALLED_APPS`
-3. **mywatchlist/models.py:** tambah class `WatchlistMovie` berisikan field atribut-atributnya
-4. **cmd:** `python manage.py makemigrations`
-5. **cmd:** `python manage.py migrate`
-6. **mywatchlist:** buat folder `fixtures` dan di dalamnya file `initial_mywatchlist_data.json`
-7. **mywatchlist/fixtures/initial_mywatchlist_data.json:** tambah data berdasarkan model
-8. **cmd:** `python manage.py loaddata initial_mywatchlist_data.json`
-9. **mywatchlist:** buat folder `templates` dan di dalamnya file `mywatchlist.html`
-10. **mywatchlist/templates/mywatchlist.html:** tambah tag HTML dan Django untuk menampilkan data dalam bentuk tabel
-11. **mywatchlist/views.py:** tambah import dan tiga function `show_mywatchlist_html/xml/json` yang mengembalikan response sesuai file format masing-masing berisikan data
-12. **mywatchlist:** buat file `urls.py`
-13. **mywatchlist/urls.py:** tambah import, string `app_name`, dan list `urlpatterns` berisikan function `path` ke masing-masing function di views (html sebagai default)
-14. **project_django/urls.py:** tambah function `path` ke mywatchlist di `urlpatterns`
+## Alur Data dari Form ke Template
 
-Runserver dan buka app di localhost. Jika berhasil, push dan jalankan workflow di GitHub untuk men-deploy ke Heroku.
+1. Setelah form dikumpulkan, data dari form dimasukkan ke constructor class Form dengan `<FormName>(request.POST)`.
+2. Object tersebut dicek kevalidannya. Jika iya (dan semua data yang bersesuaian dengan attribute model lengkap), object tersebut dapat di-`.save()`.
+3. `save` menyimpan object ke dalam database `model` yang tertera dalam class Form tersebut.
+4. Semua object dalam database model dapat diambil dengan `<ModelName>.objects.all()` dan dimasukkan ke dalam context untuk ditampilkan di halaman.
+5. Sintaks Django dalam file HTML seperti `{% for ... %}`, `{% if ... %} ` dsb. menentukan bagaimana object-object tersebut ditampilkan.
 
-## Screenshot Postman
+---
 
-![Postman HTML](screenshots/tugas3_postman_html.jpg "Postman HTML")
-![Postman XML](screenshots/tugas3_postman_xml.jpg "Postman XML")
-![Postman JSON](screenshots/tugas3_postman_json.jpg "Postman JSON")
+## Implementasi Tugas 4
+
+### Membuat aplikasi todolist
+1. **cmd:** `python manage.py startapp todolist`.
+2. **project_django/settings.py:** tambah `todolist` di list `INSTALLED_APPS`.
+3. **todolist:** buat folder `templates` dan file `todolist.html` di dalamnya.
+4. **todolist/views.py:** buat function `show_todolist`.
+
+### Menambahkan path todolist
+1. **todolist:** buat file `urls.py`.
+2. **todolist/urls.py:** tambah import, `app_name`, dan `urlpatterns` berisi path ke function `show_todolist`.
+3. **project_django/urls.py:** tambah path ke aplikasi todolist di `urlpatterns`.
+
+### Membuat model Task
+1. **todolist/models.py:** tambah import dan class `Task` dengan attribute `user`, `date`, `title`, dan `description`.
+2. **cmd:** `python manage.py makemigrations`.
+3. **cmd:** `python manage.py migrate`.
+
+### (NEW) Membuat fitur registrasi, login, dan logout
+1. **todolist/views.py:** tambah import dan function `register`, `login_user`, dan `logout_user` (mengikuti petunjuk Lab 3).
+2. **todolist/templates:** buat file `register.html` dan `login.html` (mengikuti petunjuk Lab 3).
+3. **todolist/views.py:** tambah import dan `@login_required` di atas function `show_todolist` dan `create_task` (mengikuti petunjuk Lab 3).
+
+### (NEW) Melengkapi halaman todolist
+1. **todolist/templates/todolist.html:** tambah tag-tag Django dan HTML untuk menampilkan:
+- username.
+- tombol logout.
+- tabel task (hanya menampilkan task buatan user yang sedang log in).
+- tombol tambah task (saat ini belum berfungsi).
+2. **todolist/views.py:** tambah dict `context` berisikan `user` dan `username` yang sedang log in dan semua `tasks` dari database untuk ditampilkan.
+
+### (NEW) Membuat fitur tambah task
+1. **todolist:** buat file `forms.py`.
+2. **todolist/forms.py:** tambah import `ModelForm` dan `Task`, lalu tambah class `TaskForm`, yaitu form untuk model `Task` (mengikuti dokumentasi ModelForm Django):
+- meminta input `title` dan `description`.
+- `date` akan diisi secara otomatis.
+- `user` tidak perlu diberi input (`exclude`).
+3. **todolist/views.py:** tambah import `TaskForm` dan function `create_task` yang mirip seperti function `register` dengan tambahan:
+- isi attribute `user` dengan user yang sedang log in.
+4. **todolist/templates:** buat file `create_task.html` yang mirip seperti `register.html` (dengan `{{form.as_table}}`).
+5. **todolist/templates/todolist.html:** menambahkan link pada tombol tambah task ke `create_task`.
+
+### Routing
+1. **todolist/urls.py:** tambah path ke `register`, `login`, `logout`, dan `create_task` di `urlpatterns`.
