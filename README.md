@@ -1,4 +1,4 @@
-# Pemrograman Berbasis Platform - Tugas 4
+# Pemrograman Berbasis Platform - Tugas 5
 
 Nama: Calista Vimalametta Heryadi<br>
 NPM: 2106630473<br>
@@ -12,73 +12,75 @@ Kelas: C
 
 ---
 
-## {% csrf_token %} pada \<form\>
+## Inline, Internal, dan External CSS
 
-CSRF token adalah bentuk perlindungan terhadap serangan Cross Site Request Forgery (CSRF) berupa string random. CSRF token di-generate server ketika client mengakses form dengan `{% csrf_token %}`, kemudian token tersebut dimasukkan ke sebuah field tersembunyi dalam form dan disimpan oleh server. Saat client mengumpulkan form, server membandingkan token dari form dengan token yang disimpan. Jika sama, server memproses request client. Jika tidak sama atau tidak ada, server menolak request client dengan error 403 Forbidden.
-
----
-
-## Membuat \<form\> secara Manual
-
-Form dapat dibuat secara manual menggunakan tag `<input>` untuk setiap field. Attribute `<input>` diantaranya:
-- `type`: jenis field seperti text, password (karakter disembunyikan), submit (tombol pengumpulan), dll.
-- `name`: nama yang bersesuaian dengan attribute di class Form.
-- `placeholder` atau `value`: teks yang ditampilkan pada field yang masih kosong atau tombol.
-<p>Setelah dikumpulkan, data tersebut diperoleh dengan `request.POST` dan dimasukkan ke constructor class Form seperti biasa.</p>
+| Perbedaan | Inline | Internal | External |
+| - | - | - | - |
+| Di file | .html | .html | .css |
+| Dimasukkan ke .html dengan | attribute `style` dalam tag lain | tag `<style>` dalam tag `<head>` | tag `<link>` dalam tag `<head>` |
+| Penulisan | `"property: value;"` | `selector {property: value;}` | `selector {property: value;}` |
+| Prioritas | pertama | kedua | ketiga |
+| Kelebihan | mudah dimasukkan dan di-test, kustomisasi tag spesifik | tidak harus membuat file .css, kustomisasi per selector | HTML dan CSS terpisah, dapat digunakan beberapa halaman sekaligus |
+| Kekurangan | HTML dan CSS tercampur di file yang sama, berlaku untuk satu tag saja | HTML dan CSS masih di file yang sama walaupun terpisah, berlaku untuk satu halaman saja | harus membuat file .css, kustomisasi kurang spesifik |
 
 ---
 
-## Alur Data dari Form ke Template
+## Beberapa Tag HTML5
 
-1. Setelah form dikumpulkan, data dari form dimasukkan ke constructor class Form dengan `<FormName>(request.POST)`.
-2. Object tersebut dicek kevalidannya. Jika iya (dan semua data yang bersesuaian dengan attribute model lengkap), object tersebut dapat di-`.save()`.
-3. `save` menyimpan object ke dalam database `model` yang tertera dalam class Form tersebut.
-4. Semua object dalam database model dapat diambil dengan `<ModelName>.objects.all()` dan dimasukkan ke dalam context untuk ditampilkan di halaman.
-5. Sintaks Django dalam file HTML seperti `{% for ... %}`, `{% if ... %} ` dsb. menentukan bagaimana object-object tersebut ditampilkan.
+1. `<html>`: root file, semua tag lain berada di dalam tag ini.
+2. `<head>`: kepala halaman, semua tag yang berhubungan dengan informasi file berada di dalam tag ini.
+3. `<body>`: isi halaman, semua tag yang menampilkan sesuatu berada di dalam tag ini.
+4. `<title>`: memuat judul halaman yang ditampilkan di tab.
+5. `<style>`: memuat styling (misal CSS) yang digunakan dalam halaman ini.
+6. `<h1>` dst.: memuat heading (teks yang lebih besar dan tebal).
+7. `<div>`: memuat bagian dari halaman, berisi tag-tag lain.
+8. `<br>`: line break (newline).
+9. `<hr>`: horizontal rule (garis).
+10. `<a>`: memuat hyperlink (dengan attribute href).
+11. `<span>`: memuat bagian dari teks, biasanya untuk styling.
+12. `<p>`: memuat teks paragraf, otomatis diberi jarak.
+13. `<table>`: memuat table dengan tag baris `<tr>` dan tag data `<td>` (juga `<th>` untuk header/cetak tebal).
+14. `<form>`: memuat form, tag `<input>` untuk field berada di dalam tag ini.
 
 ---
 
-## Implementasi Tugas 4
+## Tipe Selector CSS
 
-### Membuat aplikasi todolist
-1. **cmd:** `python manage.py startapp todolist`.
-2. **project_django/settings.py:** tambah `todolist` di list `INSTALLED_APPS`.
-3. **todolist:** buat folder `templates` dan file `todolist.html` di dalamnya.
-4. **todolist/views.py:** buat function `show_todolist`.
+1. **element:** style untuk satu jenis element/tag tertentu, ditulis misalnya `tag-html`.
+2. **id:** style untuk satu element spesifik dengan id yang sama, ditulis misalnya `#id`.
+3. **class:** style untuk element yang memiliki nilai attribute class yang sama, ditulis misalnya `.nilai-attribute`.
+4. **universal:** style untuk semua element dalam file .html, ditulis `*`.
+5. **group:** style untuk beberapa element sekaligus, ditulis misalnya `element-1, element-2` (selector di atas dapat digunakan).
+6. **attribute:** style untuk element yang memiliki attribute yang sama, ditulis misalnya `[attribute]`.
 
-### Menambahkan path todolist
-1. **todolist:** buat file `urls.py`.
-2. **todolist/urls.py:** tambah import, `app_name`, dan `urlpatterns` berisi path ke function `show_todolist`.
-3. **project_django/urls.py:** tambah path ke aplikasi todolist di `urlpatterns`.
+---
 
-### Membuat model Task
-1. **todolist/models.py:** tambah import dan class `Task` dengan attribute `user`, `date`, `title`, dan `description`.
-2. **cmd:** `python manage.py makemigrations`.
-3. **cmd:** `python manage.py migrate`.
+## Implementasi Tugas 5
 
-### (NEW) Membuat fitur registrasi, login, dan logout
-1. **todolist/views.py:** tambah import dan function `register`, `login_user`, dan `logout_user` (mengikuti petunjuk Lab 3).
-2. **todolist/templates:** buat file `register.html` dan `login.html` (mengikuti petunjuk Lab 3).
-3. **todolist/views.py:** tambah import dan `@login_required` di atas function `show_todolist` dan `create_task` (mengikuti petunjuk Lab 3).
+### base.html
+1. Include Bootstrap CSS dengan menambahkan `<link>` di dalam `<head>`.
 
-### (NEW) Melengkapi halaman todolist
-1. **todolist/templates/todolist.html:** tambah tag-tag Django dan HTML untuk menampilkan:
-- username.
-- tombol logout.
-- tabel task (hanya menampilkan task buatan user yang sedang log in).
-- tombol tambah task (saat ini belum berfungsi).
-2. **todolist/views.py:** tambah dict `context` berisikan `user` dan `username` yang sedang log in dan semua `tasks` dari database untuk ditampilkan.
+### login.html, register.html, dan create_task.html
+1. Memindahkan `<h1>` ke `<div>` tersendiri di atas halaman untuk membuat header.
+2. Mengeluarkan tombol submisi keluar dari `<table>` agar tombol terletak di tengah.
+3. Mengubah tampilan message dari menggunakan poin `<ul>` menjadi `<span>` yang mengganti warna teks.
+4. (`create_task.html` dan `views.py`) Mengubah tampilan form dari menggunakan `{{form.as_table}}` menjadi `<input>` manual untuk memperbaiki responsiveness halaman.
 
-### (NEW) Membuat fitur tambah task
-1. **todolist:** buat file `forms.py`.
-2. **todolist/forms.py:** tambah import `ModelForm` dan `Task`, lalu tambah class `TaskForm`, yaitu form untuk model `Task` (mengikuti dokumentasi ModelForm Django):
-- meminta input `title` dan `description`.
-- `date` akan diisi secara otomatis.
-- `user` tidak perlu diberi input (`exclude`).
-3. **todolist/views.py:** tambah import `TaskForm` dan function `create_task` yang mirip seperti function `register` dengan tambahan:
-- isi attribute `user` dengan user yang sedang log in.
-4. **todolist/templates:** buat file `create_task.html` yang mirip seperti `register.html` (dengan `{{form.as_table}}`).
-5. **todolist/templates/todolist.html:** menambahkan link pada tombol tambah task ke `create_task`.
+### todolist.html
+1. Memindahkan `<h1>` ke `<div>` tersendiri di atas halaman untuk membuat header.
+2. Menukar urutan tampilan objek menjadi username, message, tombol, dan task.
+3. Menggabungkan tombol logout dan tambah task menjadi satu baris.
+4. Mengubah tampilan task dari menggunakan `<table>` menjadi `<div class="card">`.
+5. Menambahkan fitur animasi hover pada card.
 
-### Routing
-1. **todolist/urls.py:** tambah path ke `register`, `login`, `logout`, dan `create_task` di `urlpatterns`.
+### Style yang disamakan untuk objek tertentu
+1. **header:** `<div class="bg-dark text-white text-center py-3">`
+2. **isi halaman:** `<div class="container text-center py-3">`
+3. **tabel form:** `<table class="table table-hover table-borderless align-middle">`
+4. **tombol form:** `<input class="btn btn-dark" ...>`
+5. **pesan:** `<span class="text-danger">` atau `<span class="text-success">`
+6. **grid untuk tombol:** `<div class="row justify-content-center">` dan `<div class="col-6 col-sm-4 col-md-3">`
+7. **tombol todolist:** `<a class="btn btn-dark">`
+8. **grid untuk card:** `<div class="row justify-content-center px-3>` dan `<div class="col-sm-6 col-md-4 p-3">`
+9. **card:** `<div class="card h-100 text-white bg-dark">`
+10. **animasi hover card:** `.card{transition: all 0.2s ease;} .card:hover{opacity: 0.8, transform: scale(1.1);}`

@@ -44,7 +44,6 @@ def logout_user(request):
 
 @login_required(login_url="/todolist/login/")
 def create_task(request):
-    form = TaskForm()
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -52,5 +51,4 @@ def create_task(request):
             form.save()
             messages.success(request, "Task telah berhasil ditambahkan!")
             return redirect("todolist:show_todolist")
-    context = {"form": form}
-    return render(request, "create_task.html", context)
+    return render(request, "create_task.html")

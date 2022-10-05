@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>Tambah Task Baru</title>
+  <title>Tambah Task Baru</title>
 {% endblock meta %}
 
 {% block content %}
-
-<div class = "login">
-
+  <div class="bg-dark text-white text-center py-3">
     <h1>Tambah Task Baru</h1>
+  </div>
 
+  <div class = "container text-center py-3">
     <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Tambah Task"></td>
-            </tr>
-        </table>
+      {% csrf_token %}
+      <table class="table table-hover table-borderless align-middle">
+        <tr>
+          <th>Judul: </th>
+          <td><input type="text" name="title" placeholder="Judul" class="form-control"></td>
+        </tr>
+        <tr>
+          <th>Deskripsi: </th>
+          <td><input type="text" name="description" placeholder="Deskripsi" class="form-control"></td>
+        </tr>
+      </table>
+      <input class = "btn btn-dark" type="submit" value="Tambah Task"></td>
     </form>
-
-</div>
-
+  </div>
 {% endblock content %}
