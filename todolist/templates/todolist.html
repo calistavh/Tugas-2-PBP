@@ -2,6 +2,7 @@
 
 {% block meta %}
   <title>To-Do List</title>
+
   <style>
     .card{
       transition: all 0.2s ease;
@@ -11,6 +12,45 @@
       transform: scale(1.1);
     }
   </style>
+
+  <script>
+    function appendCard(title, date, description) {
+      $("#card-grid").append(`
+        <div class="col-sm-6 col-md-4 p-3">
+          <div class="card h-100 text-white bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">${title}</h5>
+              <h6 class="card-subtitle text-muted">Dibuat pada ${date}</h6>
+              <br>
+              <p class="card-text">${description}</p>
+            </div>
+          </div>
+        </div>
+      `)
+    }
+    
+    $(document).ready(function() {
+      $.get("{% url 'todolist:show_todolist_json' %}", function(tasks) {
+        for (const task of tasks) {
+          if (task["user_id"] == "{{ user_id }}") {
+            appendCard(task["title"], task["date"], task["description"])
+          }
+        }
+      }, "json")
+
+      $("form").submit(function(event) {
+        event.preventDefault()
+        var form = {
+          title: $("#title").val(),
+          description: $("#description").val(),
+          csrfmiddlewaretoken: "{{ csrf_token }}",
+        }
+        $.post("{% url 'todolist:add' %}", form, function(task) {
+          appendCard(task["title"], task["date"], task["description"])
+        }, "json")
+      })
+    })
+  </script>
 {% endblock meta %}
 
 {% block content %}
@@ -19,7 +59,7 @@
   </div>
   
   <div class="container text-center py-3">
-    <h4>Semangat mengerjakan task-mu, {{ username }}!</h4>
+    <h4>Semangat mengerjakan task-mu, {{ user }}!</h4>
 
     {% if messages %}
       {% for message in messages %}
@@ -35,24 +75,39 @@
       <div class="col-6 col-sm-4 col-md-3">
         <a class="btn btn-dark" href="{% url 'todolist:create_task' %}">Tambah Task</a>
       </div>
+      <div class="col-6 col-sm-4 col-md-3">
+        <a class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal">Add Task</a>
+      </div>
     </div>
     <hr>
 
-    <div class="row justify-content-center px-3">
-      {% for task in tasks %}
-        {% if task.user == user %}
-          <div class="col-sm-6 col-md-4 p-3">
-            <div class="card h-100 text-white bg-dark">
-              <div class="card-body">
-                <h5 class="card-title">{{ task.title }}</h5>
-                <h6 class="card-subtitle text-muted">Dibuat pada {{ task.date }}</h6>
-                <br>
-                <p class="card-text">{{ task.description }}</p>
-              </div>
-            </div>
+    <div class="modal fade" id="modal" data-bs-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tambah Task Baru</h5>
+            <a class="btn-close" data-bs-dismiss="modal"></a>
           </div>
-        {% endif %}
-      {% endfor %}
-    </div>  
+          <div class="modal-body">
+            <form method="POST" action="">
+              {% csrf_token %}
+              <table class="table table-hover table-borderless align-middle">
+                <tr>
+                  <th>Judul: </th>
+                  <td><input type="text" id="title" placeholder="Judul" class="form-control"></td>
+                </tr>
+                <tr>
+                  <th>Deskripsi: </th>
+                  <td><input type="text" id="description" placeholder="Deskripsi" class="form-control"></td>
+                </tr>
+              </table>
+              <input class="btn btn-dark" data-bs-dismiss="modal" type="submit" value="Tambah Task">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center px-3" id="card-grid"></div>  
   </div>
 {% endblock content %}
