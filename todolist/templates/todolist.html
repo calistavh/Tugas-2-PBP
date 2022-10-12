@@ -47,6 +47,7 @@
         }
         $.post("{% url 'todolist:add' %}", form, function(task) {
           appendCard(task["title"], task["date"], task["description"])
+          $("#modal").modal("hide")
         }, "json")
       })
     })
@@ -60,12 +61,6 @@
   
   <div class="container text-center py-3">
     <h4>Semangat mengerjakan task-mu, {{ user }}!</h4>
-
-    {% if messages %}
-      {% for message in messages %}
-        <br><span class="text-success">{{ message }}</span><br>
-      {% endfor %}
-    {% endif %}
 
     <br>
     <div class="row justify-content-center">
@@ -94,14 +89,14 @@
               <table class="table table-hover table-borderless align-middle">
                 <tr>
                   <th>Judul: </th>
-                  <td><input type="text" id="title" placeholder="Judul" class="form-control"></td>
+                  <td><input type="text" id="title" placeholder="Judul" class="form-control" required></td>
                 </tr>
                 <tr>
                   <th>Deskripsi: </th>
-                  <td><input type="text" id="description" placeholder="Deskripsi" class="form-control"></td>
+                  <td><input type="text" id="description" placeholder="Deskripsi" class="form-control" required></td>
                 </tr>
               </table>
-              <input class="btn btn-dark" data-bs-dismiss="modal" type="submit" value="Tambah Task">
+              <input class="btn btn-dark" type="submit" value="Tambah Task">
             </form>
           </div>
         </div>

@@ -52,7 +52,6 @@ def create_task(request):
             form.save()
             messages.success(request, "Task telah berhasil ditambahkan!")
             return redirect("todolist:show_todolist")
-        messages.info(request, "Judul dan Deskripsi harus diisi!")
     return render(request, "create_task.html")
 
 def show_todolist_json(request):
@@ -65,4 +64,3 @@ def add_task(request):
     if form.is_valid():
         form.save()
         return JsonResponse({"title": form.instance.title, "date": form.instance.date, "description": form.instance.description})
-    return redirect("todolist:show_todolist")
